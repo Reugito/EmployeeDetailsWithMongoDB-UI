@@ -1,0 +1,113 @@
+<mat-toolbar class="toolbar">
+  <button class="menu-icon" mat-icon-button >
+      <mat-icon>menu</mat-icon>
+  </button>
+  <span class="title-text" fxLayoutAlign="center center" > EmployeeDetails</span>
+  <span class="example-spacer"></span>
+    <button matTooltip="SignIn" class="material-icons" [routerLink]="['/signIn']">account_circle</button>
+</mat-toolbar>
+
+<div style="height: 105%;">
+  <div fxLayoutAlign="center">
+    <form class="form" [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)" fxLayoutAlign="row" enctype="multipart/form-data">
+      <div class="form-div">
+        <div class = "form-head" fxLayoutAlign="center">Employee Registration</div>
+        <div class="title-head" fxLayoutAlign="center">Create your Account</div>
+  
+        <div fxLayoutAlign="center center">
+          <input #file type="file" accept="image/png, image/jpeg" formControlName='image' style="display: none;" (change)="displayImage(file.files)">
+          <img [src]="imgURL" (click)="file.click()"  *ngIf="imgURL">
+        </div>
+        <div fxLayout.xs="column" fxLayoutAlign="space-between">
+          <span>
+            <button class="img-button" type="button" *ngIf="!imgURL"  (click)="file.click()" >Select Image</button>
+            <mat-error class="error" *ngIf="isImageValid">Image size should be less than 3MB</mat-error>
+          </span>
+          
+          <!-- <mat-form-field appearance="outline" class="textbox">
+            <mat-label>EmpId</mat-label>
+            <input matInput type="text" formControlName="empId" id="empId" >
+            <mat-error *ngIf="registerForm.controls.empId.errors" class="error-text">Invalid empId</mat-error> 
+           </mat-form-field> -->
+        </div>
+  
+        <div fxLayout.xs="column" fxLayoutAlign="space-between">
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>First name</mat-label>
+            <input matInput type="text" formControlName="firstName" id="fisrtName" autocomplete=off>
+            <mat-error *ngIf="registerForm.controls.firstName.errors" class="error-text">Invalid FirstName</mat-error> 
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>Last name</mat-label>
+            <input matInput type="text" formControlName="lastName" id="lastName" autocomplete=off >
+            <mat-error *ngIf="registerForm.controls.lastName.errors" class="error-text">Invalid LastName</mat-error> 
+          </mat-form-field>
+        </div>
+    
+        <div fxLayout.xs="column" fxLayoutAlign="space-between">
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>EmpId</mat-label>
+            <input matInput type="text" formControlName="empId" id="empId" autocomplete=off>
+            <mat-error *ngIf="registerForm.controls.empId.errors" class="error-text">Invalid empId</mat-error> 
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>PhoneNo</mat-label>
+            <input matInput type="text" formControlName="phoneNo" id="PhoneNo" autocomplete=off>
+            <mat-error *ngIf="registerForm.controls.phoneNo.errors" class="error-text">Invalid PhoneNo</mat-error> 
+          </mat-form-field>
+          
+        </div>
+  
+        <div fxLayout.xs="column" fxLayoutAlign="space-between">
+          
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>Address</mat-label>
+            <input matInput type="text" formControlName="address" id="address" autocomplete=off>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="startDate" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+  
+          <!-- <mat-form-field appearance="outline" class="textbox">
+            <mat-label>End Date</mat-label>
+            <input matInput [matDatepicker]="endDate" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field> -->
+        </div>
+        
+        <div>
+          <mat-form-field appearance="outline" class="email">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" formControlName="emailId" id="emailId" autocomplete=off>
+           </mat-form-field>
+        </div>
+        <div fxLayout.xs="column" fxLayoutAlign="space-between">
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password" id="password"  onCopy="return false" onPaste="return false">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="textbox">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="text" formControlName="confirmPassword" id="confirmPassword" onCopy="return false" onPaste="return false" autocomplete=off >
+            <mat-error *ngIf="registerForm.controls.confirmPassword">Wrong confirmPassword</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+         
+        </div>
+        <div class="button-div" fxLayoutAlign="space-between center">
+          <a [routerLink]="['/signIn']" class="link-text">Sign in instead</a>
+          <input class="next-button" type="submit" value="Submit" [style.fontSize.px]="11" *ngIf="registerForm.valid" >
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+

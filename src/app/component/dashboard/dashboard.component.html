@@ -1,0 +1,102 @@
+<mat-toolbar class="toolbar" style="margin-top: 5px;">
+    <button class="menu-icon" mat-icon-button >
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="title-text" fxLayoutAlign="center center" (click)="getAllEmployees()" > EmployeeDetails</span>
+    
+    <span class="search-div" fxLayoutAlign="center center" *ngIf="param != 'startDate,endDate' && (param !='startDate') && param != 'endDate'">
+        <span class="material-icons search-icon">search</span>
+        <input class="search" matInput type="text"  form  placeholder="Search" [(ngModel)]="searchInput" (click)= "inputValidator(searchInput, param)">
+        <mat-error *ngIf="error != ''" class="error-text">{{error}}</mat-error> 
+    </span>
+
+    
+    <span class="date-range" *ngIf="param == 'startDate' || param == 'endDate'" >
+        <mat-form-field appearance="outline" >
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]='date' (dateChange)="searchByStartAndEndDate(param,date)">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </span>
+
+    <span class="date-range" *ngIf="param == 'startDate,endDate'" >
+        <mat-form-field appearance="outline" style="width: 250px;">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+          </mat-form-field>
+          <button *ngIf="range.valid" value="search" (click)="searchBetweenDates(range.value.start, range.value.end)">Search</button>  
+    </span>
+  
+    <div style="margin-left: 30px;" >
+        <mat-form-field appearance="outline" class="textbox" style="height: 10px;">
+            <mat-label>Search BY</mat-label>
+            <mat-select [formControl]="searchBy">
+              <mat-option *ngFor="let param of paramList" [value]="param" (click)="getParam(param)">{{param}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <span class="example-spacer"></span>
+    <mat-icon matTooltip="Add" [routerLink]="['/register']" *ngIf="isAdminLoggedIn">add</mat-icon>
+    <button matTooltip="Logout" class="material-icons" (click)="logOut()">account_circle</button>
+    
+</mat-toolbar>
+<br>
+<div class="content">
+    <div class="table-main">
+        <span fxLayoutAlign="start"><b>EmployeeDetails </b>
+            <span class="emp-cnt">{{totalEmpCount}}</span>
+            </span><br>
+        <table id="table-display" class="table table-stripped">
+            <thead>
+     
+                <th>Profilpic</th>
+                <th>empId</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>PhoneNo</th>
+                <th>Status</th>
+                <th>Address</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+                <th *ngIf="isAdminLoggedIn">Actions</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let emp of empDetails; let i = index"[attr.data-index]="i">
+            
+                    <td *ngIf="emp.image != null" ><img [src] ="'data:image/png;base64,'+emp.image.data" class="profilepic" ></td>
+                    <td>{{emp.id}}</td>
+                    <td>{{emp.firstName}}</td>
+                    <td>{{emp.lastName}}</td>
+                    <td>{{emp.email}}</td>
+                    <td>{{emp.phoneNo}}</td>
+                    <td>{{emp.status}}</td>
+                    <td>{{emp.address}}</td>
+                    <td>{{emp.startDate}}</td>
+                    <td>{{emp.endDate}}</td>
+                
+                    <td *ngIf="isAdminLoggedIn">
+                        <img src="../assets/icons/delete-black-18dp.svg" alt="delete" id="undefined" matTooltip="Delete" (click)="deleteEmployee(emp.id)">
+                        <img src="../assets/icons/create-black-18dp.svg" alt="update" id="undefined" matTooltip="Update" [routerLink]="['/update', emp.id]">
+                        <img src="../assets/icons/create-black-18dp.svg" alt="update" id="undefined" matTooltip="Approve" (click)="approveStatus(emp.id)">
+                        <img src="../assets/icons/create-black-18dp.svg" alt="update" id="undefined" matTooltip="Reject" (click)="rejectStatus(emp.id)">
+                    </td>
+                </tr>
+            </tbody>
+        </table><br>
+        <div class="pagination" fxLayoutAlign="end ">
+            <a  (click)="previousPage()" matTooltip="PreviousPage">❮</a>
+            <span fxLayoutAlign="center center" style="width: 15px;">{{pageNo}}</span>
+            <a  (click)="nextPage()" matTooltip="NextPage">❯</a>
+        </div>
+    </div>
+</div>

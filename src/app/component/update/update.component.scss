@@ -1,0 +1,87 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.toolbar {
+    background-color:white;
+  }
+  .title-text {
+    color: #5F6368;
+  }
+
+  
+  .material-icons-outlined, button {
+    border: 0px;
+    background-color: transparent;
+  }
+
+  .material-icons {
+    padding-right: 20px;
+    color: #5F6368;
+  }
+  .menu-icon {
+    border: 0px;
+    background-color: white;
+    color: #5F6368;
+  }
+  .menu-icon {
+    outline: none;
+  }
+
+.form {
+    margin-top: 30px;
+    padding: 49px 0px 49px 43px;
+    border: 1px solid #00000029;
+    border-radius: 8px;
+    width: 32%;
+}
+
+.form-head, .title-head {
+    font: 21px/16px Roboto;
+    padding-bottom: 20px;
+}
+
+.title-head {
+    font: 24px Roboto;
+}
+
+.textbox {
+    width: 195px;
+}
+
+.email {
+    width: 400px;
+}
+img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+
+.show-password {
+    outline: 2px solid gray;
+}
+
+.error-text {
+    font-size: 10px;
+}
+
+.button-div {
+    padding-top: 10px;
+}
+
+.link-text {
+    text-decoration: none;
+    color:#1A73E8;
+}
+
+.next-button {
+    background-color: #1A73E8;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    color: white;
+    border: white;
+}
+
+
+
